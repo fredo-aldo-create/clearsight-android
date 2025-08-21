@@ -1,6 +1,3 @@
-cd ~/Téléchargements/CREATION/clearsight-android
-mkdir -p .github/workflows
-cat > .github/workflows/android-ci.yml <<'YAML'
 name: Android CI (APK Debug)
 
 on:
