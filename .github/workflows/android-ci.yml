@@ -24,7 +24,7 @@ jobs:
       - name: Setup Gradle cache
         uses: gradle/actions/setup-gradle@v3
 
-      # Installe proprement l'Android SDK + sdkmanager
+      # Installe l'Android SDK proprement (fournit sdkmanager dans le PATH)
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
@@ -33,14 +33,17 @@ jobs:
           sdkmanager --licenses <<<"y"
           sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
 
-      # 👉 Installe Gradle sur le runner et génère le wrapper du projet
+      # Installe Gradle et génère le wrapper si absent
       - name: Install Gradle 8.4 + generate wrapper
         run: |
           curl -s "https://get.sdkman.io" | bash
           source "$HOME/.sdkman/bin/sdkman-init.sh"
           sdk install gradle 8.4
           gradle --version
-          gradle wrapper --gradle-version 8.4
+          # Génère le wrapper si ./gradlew n'existe pas
+          if [ ! -f "./gradlew" ]; then
+            gradle wrapper --gradle-version 8.4
+          fi
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
