@@ -49,8 +49,3 @@ jobs:
           name: clearsight-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
-YAML
-
-git add .github/workflows/android-ci.yml
-git commit -m "Add GitHub Actions workflow to build debug APK"
-git push
